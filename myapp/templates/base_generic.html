@@ -133,6 +133,17 @@
   </div>
   {% endif %}
   <script>
+    document.getElementById('backup-btn')?.addEventListener('click', function() {
+    if (confirm('¿Estás seguro de que deseas realizar el backup?')) {
+        fetch("{% url 'backup_database' %}", {
+            method: 'GET',
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(data => alert(data.status))
+        .catch(error => alert('Error al realizar el backup'));
+    }
+    });
     document.getElementById('sv-nav-toggle').addEventListener('click', function() {
       document.getElementById('sv-nav-links').classList.toggle('open');
     });
