@@ -27,7 +27,7 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))  # Carga las variables de entorno de
 # SECURITY WARNING: keep the secret key used in production secret!
 # Debes establecer 'DJANGO_SECRET_KEY' en el archivo de entorno o como variable de entorno.
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')  # Esto buscará la variable de entorno
-
+ANTHROPIC_API_KEY = os.getenv('ANTHROPIC_API_KEY')
 if not SECRET_KEY:
     raise ValueError("La variable de entorno DJANGO_SECRET_KEY no está definida")
 

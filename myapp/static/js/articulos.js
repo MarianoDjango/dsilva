@@ -16,6 +16,8 @@ function familias_empresa(idempresa, nomempresa){
           response.filas.forEach(function(item) {
             $('#sidebar-nav').append(item.fila);
           });
+          var primera = document.querySelector('#sidebar-nav .sv-fam-item');
+          if (primera) primera.classList.add('active');
         },
       });
     buscart()

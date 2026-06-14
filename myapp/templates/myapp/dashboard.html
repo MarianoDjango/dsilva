@@ -12,38 +12,35 @@
     }
 
 </style>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <ul class="nav nav-tabs">
-            {% for empresa in empresas %}
-                <li class="nav-item">
-                    <a class="nav-link {% if empresa.id == id_empresa %}active{% endif %}" id="navi{{ empresa.id }}" href="{% url 'dashboard' empresa.id %}?pfamilia=">
-                        {{ empresa.name }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    </nav>
+
     {% if id_empresa == user.perfil.idempresa_id or user.is_staff %}
-        <div class="container-fluid">
-            <ul class="nav navbar-expand-lg navbar-light bg-light justify-content-end">
-                <li>&nbsp;&nbsp;&nbsp;</li>
-                <li class="nav-item">
-                    <button type="button" class="btn btn-outline-success position-relative" title="Ver Pedido" onclick="verificarCarrito()"><i class="bi bi-cart">
-                        <span id="badgeCarrito" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        <div class="container-fluid px-0">
+            <div style="background: #2d0e0e; padding: 8px 20px; display: flex; align-items: center; justify-content: flex-end; gap: 12px;">
+            <ul class="nav navbar-expand-lg " style="margin-bottom: 0;">
+                <li class="nav-item" style="display:flex; align-items:center; gap:8px; margin-right:12px;">
+                    <button type="button" class="btn position-relative" style="background:#e8ae1a; color:#fff; border:none;" title="Ver Pedido" onclick="verificarCarrito()"><i class="bi bi-cart">
+                        <span id="badgeCarrito" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="z-index: 1002 ;">
                             {{cantidad_carrito}} <!-- Número de artículos inicial -->
                         </span>
                         </i></button>
                 </li>
-                <li>&nbsp;&nbsp;&nbsp;</li>
                 <li class="nav-item">
-                    <a type="button" class="btn btn-danger" id="borracarrito" title="Borrar Carrito" href="/myapp/dashboard/{{id_empresa}}/vaciar/?pfamilia={{id_familia}}"><i class="bi bi-cart-x">
-                        
-                    </i></a>
+                    <a type="button" class="btn" style="background:#e81a1a; color:#fff; border:none;" id="borracarrito" title="Borrar Carrito" href="/myapp/dashboard/{{id_empresa}}/vaciar/?pfamilia={{id_familia}}"><i class="bi bi-cart-x"></i></a>
                 </li>
             </ul>
+            </div>
         </div>
     {% endif %}
-    <div class="container-xxl">
+    <nav style="background: #382e2e; padding: 0 20px; display: flex; gap: 4px; align-items: center;">
+    {% for empresa in empresas %}
+        <a href="{% url 'dashboard' empresa.id %}?pfamilia="
+        id="navi{{ empresa.id }}"
+        style="padding: 10px 18px; font-size: 13px; font-weight: 500; text-decoration: none; border-bottom: 2px solid {% if empresa.id == id_empresa %}#e85d1a{% else %}transparent{% endif %}; color: {% if empresa.id == id_empresa %}#fff{% else %}#888{% endif %}; transition: color 0.2s;">
+        {{ empresa.name }}
+        </a>
+    {% endfor %}
+    </nav>
+    <div class="container-fuid" style="padding: 12px;">
     <div class="row flex-nowrap">
         <div class="col-auto px-0">
             <div id="sidebar" class="collapse collapse-horizontal show border-end">
@@ -54,9 +51,9 @@
         </div>
         <main class="col ps-md-2 pt-2">
             <h1 id="idempresa" style="display: none;">{{ id_empresa }}</h1>
-            <h1 id="empresa">{{ nomempresa }}</h1>
+            <h1 id="empresa" style="display: none;">{{ nomempresa }}</h1>
             <h1 id="idfamilia" style="display: none;">{{ id_familia }}</h1>
-            <h1 id="familia">{{ familia_nom }}</h1>
+            <h1 class="sv-cat-title" id="familia">{{ familia_nom }}</h1>
             <input class="form-control" type="text" id="articsearch" oninput="buscart()" placeholder="Buscar artículo...">
             <hr>
             {% if user.is_staff %}

@@ -1,70 +1,200 @@
 {% extends "base_generic.html" %}
 {% load static %}
+
+
+{% block title %}Distribuidora Silva | Parches, Neumáticos, Cámaras y Herramientas para Gomería — Paso del Rey{% endblock %}
+{% block meta_description %}Distribuidora mayorista de cubiertas, neumáticos, cámaras, parches y herramientas para gomería en Paso del Rey, Buenos Aires. +2000 productos, envíos a todo el país, 13% off en efectivo.{% endblock %}
+{% block og_title %}Distribuidora Silva | Insumos para Gomería{% endblock %}
+{% block og_description %}+2000 productos para gomería: cubiertas, cámaras, parches y herramientas. Envíos a todo el país desde Paso del Rey, Buenos Aires.{% endblock %}
 {% block content %}
-
-<div class="container-fluid" style="background-color: #fffeee;">
-
-  <div class="shadow-lg">
-    <div id="carouselExampleControls" class="carousel carousel-light slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="{% static '/img/carrousel1.jpeg' %}"class="carousel-img" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h4>Productos</h5>
-            <p> de primera calidad</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-            <img src="{% static '/img/carrousel2.jpeg' %}" class="carousel-img" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h4>Confianza</h5>
-            <p>Mas de 10 años de experiancia</p>
-          </div>
-        </div>
-          <div class="carousel-item">
-              <img src="{% static '/img/carrousel5.jpeg' %}" class="carousel-img" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h4>Confianza</h5>
-            <p>Mas de 10 años de experiancia</p>
-          </div>
-        </div>
-       <div class="carousel-item">
-            <img src="{% static '/img/carrousel.jpg' %}" class="carousel-img" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h4>Confianza</h5>
-            <p>Mas de 10 años de experiancia</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-            <img src="{% static '/img/carrousel4.jpeg' %}" class="carousel-img" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h4>Precios</h5>
-            <p> Tenemos los mejores precios en insumos de Gomeria</p>
-          </div>
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+<!-- HERO -->
+<section class="sv-hero" id="home">
+  <div class="sv-hero-content">
+    <div class="sv-hero-tag">Todo para el gomero</div>
+    <h1>TODO LO QUE<br>TU GOMERÍA<br><em>NECESITA</em></h1>
+    <p class="sv-hero-desc">Cubiertas, parches, cámaras, herramientas y accesorios para gomería. Distribución en toda Argentina con más de 10 años en el rubro.</p>
+    <div class="sv-hero-btns">
+      <a href="{% url 'catalogo_articulos' %}" class="sv-btn-primary">Ver catálogo</a>
+      <a href="https://api.whatsapp.com/send?phone=+541157493191&text=Hola" class="sv-btn-outline" target="_blank">Consultar por WhatsApp</a>
     </div>
-    <div class="container mt-5">
-      <h2 class="text-center mb-4">¿Quiénes Somos?</h2>
-      <p class="lead text-center">
-        En <strong>Distribuidora Silva</strong> nos especializamos en la venta de <strong>insumos para gomería</strong> en toda Argentina. Contamos con más de 10 años de experiencia en el rubro, brindando productos de <strong>alta calidad</strong> y un servicio de atención personalizado para nuestros clientes.
-      </p>
-      <p class="text-center">
-        Nuestro catálogo incluye <strong>parches, válvulas, cámaras, herramientas vulcanizadoras, lubricantes</strong> y mucho más. Trabajamos con las mejores marcas del mercado, garantizando confianza y durabilidad en cada producto.
-      </p>
-    </div>    
+  </div>
+  <div class="sv-hero-image">
+    <img src="{% static 'img/carrousel1.jpeg' %}" alt="Local Distribuidora Silva - Paso del Rey" loading="eager">
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="sv-stats-bar">
+  <div class="sv-stat-item"><div class="sv-stat-num">+10</div><div class="sv-stat-label">Años en el rubro</div></div>
+  <div class="sv-stat-item"><div class="sv-stat-num">+2000</div><div class="sv-stat-label">Productos disponibles</div></div>
+  <div class="sv-stat-item"><div class="sv-stat-num">Todo ARG</div><div class="sv-stat-label">Distribución nacional</div></div>
+  <div class="sv-stat-item"><div class="sv-stat-num">13%</div><div class="sv-stat-label">Descuento efectivo</div></div>
+</div>
+
+<!-- NOSOTROS -->
+<section class="sv-galeria" id="nosotros">
+  <div class="sv-section-label">Quiénes somos</div>
+  <h2 class="sv-section-title">SOBRE DISTRIBUIDORA SILVA</h2>
+  <p class="sv-section-sub">Más de 10 años proveyendo insumos para gomerías de todo el país, con atención personalizada y precios competitivos en Paso del Rey, Buenos Aires.</p>
+
+  <div class="sv-foto-grid sv-foto-grid-3">
+    <div class="sv-foto" data-label="Nuestro local en Paso del Rey">
+      <img src="{% static 'img/carrousel1.jpeg' %}" alt="Local Distribuidora Silva Paso del Rey" loading="lazy">
+    </div>
+    <div class="sv-foto" data-label="Stock de cubiertas">
+      <img src="{% static 'img/carrousel2.jpeg' %}" alt="Stock de cubiertas y neumáticos" loading="lazy">
+    </div>
+    <div class="sv-foto" data-label="Cubiertas de moto">
+      <img src="{% static 'img/carrousel5.jpeg' %}" alt="Cubiertas de moto Unimax" loading="lazy">
+    </div>
+  </div>
+
+</section>
+
+<!-- OPINIONES -->
+<section class="sv-section sv-opiniones" id="opiniones">
+  <div class="sv-section-label">Lo que dicen de nosotros</div>
+  <h2 class="sv-section-title">OPINIONES DE CLIENTES</h2>
+  <p class="sv-section-sub">Gomerías y distribuidores de todo el país confían en nosotros hace más de 10 años.</p>
+  <div class="sv-opiniones-grid">
+    <div class="sv-opinion-card">
+      <div class="sv-opinion-stars">★★★★★</div>
+      <p class="sv-opinion-text">Excelente atención y calidad, precios súper accesibles,súper recomendado!👍.</p>
+      <div class="sv-opinion-autor">Pablo M.</div>
+      <div class="sv-opinion-lugar">Local Guide</div>
+    </div>
+    <div class="sv-opinion-card">
+      <div class="sv-opinion-stars">★★★★★</div>
+      <p class="sv-opinion-text">Excelente servicio, rápido y a buen precio. Muy buena atención por parte de los muchachos, muy copados y resolutivos. Totalmente recomendable!</p>
+      <div class="sv-opinion-autor">Alejandro G.</div>
+      <div class="sv-opinion-lugar">Local Guide</div>
+    </div>
+    <div class="sv-opinion-card">
+      <div class="sv-opinion-stars">★★★★★</div>
+      <p class="sv-opinion-text">Simplemente agradecido de que siempre tengan la amabilidad y predisposición para la atención. Solucionadores de problemas.</p>
+      <div class="sv-opinion-autor">Gabriel</div>
+      <div class="sv-opinion-lugar">Local Guide</div>
+    </div>
+    <div class="sv-opinion-card">
+      <div class="sv-opinion-stars">★★★★★</div>
+      <p class="sv-opinion-text">Excelente atención y muy buen precio.</p>
+      <div class="sv-opinion-autor">Raúl E.</div>
+      <div class="sv-opinion-lugar">Local Guide</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTOS -->
+<section class="sv-section sv-productos">
+  <div class="sv-section-label">Lo que ofrecemos</div>
+  <h2 class="sv-section-title">NUESTROS PRODUCTOS</h2>
+  <p class="sv-section-sub">Todo lo que necesitás para equipar tu gomería, en un solo lugar.</p>
+  <div class="sv-productos-grid">
+    <div class="sv-prod-card">
+      <div class="sv-prod-img"><img src="{% static 'img/carrousel.jpg' %}" alt="Cubiertas y neumáticos para autos - Distribuidora Silva" loading="lazy"></div>
+      <div class="sv-prod-body">
+        <div class="sv-prod-name">Cubiertas y neumáticos</div>
+        <div class="sv-prod-desc">Todas las medidas para autos, camionetas y motos. Marcas nacionales e importadas.</div>
+        <a href="{% url 'catalogo_articulos' %}" class="sv-prod-link">Ver en catálogo →</a>
+      </div>
+    </div>
+    <div class="sv-prod-card">
+      <div class="sv-prod-img"><img src="https://res.cloudinary.com/dsoq30bkm/image/upload/dsilva/Cámaras/generic.jpg" alt="Cámaras - Distribuidora Silva" loading="lazy"></div>
+      <div class="sv-prod-body">
+        <div class="sv-prod-name">Cámaras</div>
+        <div class="sv-prod-desc">Cámaras para neumáticos de todos los tamaños y tipos.</div>
+        <a href="{% url 'catalogo_articulos' %}" class="sv-prod-link">Ver en catálogo →</a>
+      </div>
+    </div>
+    <div class="sv-prod-card">
+      <div class="sv-prod-img"><img src="https://res.cloudinary.com/dsoq30bkm/image/upload/v1750451146/dsilva/Parches/generic.jpg" alt="Parches - Distribuidora Silva" loading="lazy"></div>
+      <div class="sv-prod-body">
+        <div class="sv-prod-name">Parches</div>
+        <div class="sv-prod-desc">Variedad de parches para motos, ciclomotores y cuatriciclos. Envíos al interior.</div>
+        <a href="{% url 'catalogo_articulos' %}" class="sv-prod-link">Ver en catálogo →</a>
+      </div>
+    </div>
+    <div class="sv-prod-card">
+      <div class="sv-prod-img"><img src="{% static 'img/herramientasold.jpg' %}" alt="Herramientas para gomería - compresores y equipos" loading="lazy"></div>
+      <div class="sv-prod-body">
+        <div class="sv-prod-name">Herramientas y equipos</div>
+        <div class="sv-prod-desc">Compresores, crique hidráulico, llaves de impacto y más equipamiento profesional.</div>
+        <a href="{% url 'catalogo_articulos' %}" class="sv-prod-link">Ver en catálogo →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<div class="sv-contacto" id="contacto">
+  <div>
+    <div class="sv-section-label">Hablemos</div>
+    <h2 class="sv-section-title">CONTACTO</h2>
+    <p class="sv-section-sub">Estamos en Paso del Rey, Buenos Aires. Atendemos también por WhatsApp de lunes a sábado.</p>
+    <div class="sv-contacto-data">
+      <div class="sv-contacto-row">
+        <div class="sv-contacto-icon">📍</div>
+        <div class="sv-contacto-info"><strong>Ubicación</strong><span>Graham Bell 2048, Paso del Rey, Buenos Aires</span></div>
+      </div>
+      <div class="sv-contacto-row">
+        <div class="sv-contacto-icon">📞</div>
+        <div class="sv-contacto-info"><strong>Teléfono / WhatsApp</strong><span>11 5749-3191</span></div>
+      </div>
+      <div class="sv-contacto-row">
+        <div class="sv-contacto-icon">🕐</div>
+        <div class="sv-contacto-info"><strong>Horario</strong><span>Lun–Vie 8:00–17:00 · Sáb 8:00–13:00</span></div>
+      </div>
+    </div>
+    <div class="sv-contacto-cta">
+      <a href="https://api.whatsapp.com/send?phone=+541157493191&text=Hola,%20quiero%20consultar%20precios%20y%20stock" class="sv-btn-whatsapp" target="_blank">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Escribinos por WhatsApp
+      </a>
+    </div>
+  </div>
+  <div class="sv-map">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d205.16766044170078!2d-58.76201916069393!3d-34.63746123110191!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bc95a2c40fa497%3A0x98a91ab064d56a23!2sAlejandro%20Graham%20Bell%202048%2C%20B1742%20Paso%20del%20Rey%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1781465601051!5m2!1ses-419!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
 </div>
-<p></p>
-<div class="row">
-</div>
-
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Distribuidora Silva",
+  "url": "{{ request.scheme }}://{{ request.get_host }}",
+  "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'img/logo.png' %}",
+  "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'img/carrousel1.jpeg' %}",
+  "telephone": "+541157493191",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Graham Bell 2048",
+    "addressLocality": "Paso del Rey",
+    "addressRegion": "Buenos Aires",
+    "addressCountry": "AR"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "08:00",
+      "closes": "17:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Saturday"],
+      "opens": "08:00",
+      "closes": "13:00"
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "reviewCount": "4"
+  },
+  "sameAs": [
+    "https://www.instagram.com/distribuidorasilva.22",
+    "https://www.facebook.com/profile.php?id=100085447266394"
+  ]
+}
+</script>
 {% endblock %}

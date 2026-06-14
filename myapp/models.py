@@ -103,6 +103,7 @@ class articulos(models.Model):
     margen = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)  # Porcentaje de margen
     margen2 = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)  # Porcentaje de margen
     imagen_cloud = CloudinaryField('imagen', blank=True, null=True)
+    descripcion_seo = models.TextField(blank=True, null=True)
 
     @property
     def precio_venta_formateado(self):

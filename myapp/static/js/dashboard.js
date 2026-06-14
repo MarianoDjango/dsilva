@@ -449,6 +449,8 @@ $(document).ready(function (){
 	});
 
 function ponerfamilia(idfamilia, nomfamilia){
+    document.querySelectorAll('#sidebar-nav .sv-fam-item').forEach(i => i.classList.remove('active'));
+    document.getElementById('fam' + idfamilia).classList.add('active');
     $('#idfamilia').html(idfamilia);
     $('#familia').html(nomfamilia);
     var idempresa = document.getElementById('idempresa').innerText;

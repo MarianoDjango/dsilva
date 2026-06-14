@@ -1,111 +1,384 @@
 {% extends "base_generic.html" %}
 {% load static %}
+
 {% block head_extra %}
   <link rel="canonical" href="https://www.silvadistribuidora.com/catalogo/" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    /* ── LAYOUT CATÁLOGO ── */
+    .sv-cat-wrap {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      min-height: calc(100vh - 110px);
+    }
+
+    /* ── SIDEBAR ── */
+    .sv-cat-sidebar {
+      background: #1a1a1a;
+      padding: 20px 0;
+      position: sticky;
+      top: 62px;
+      height: calc(100vh - 62px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #333 transparent;
+    }
+    .sv-cat-sidebar::-webkit-scrollbar { width: 4px; }
+    .sv-cat-sidebar::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+    .sv-cat-sidebar-title {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #555;
+      padding: 0 16px 14px;
+    }
+
+    .sv-fam-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: background 0.15s;
+      border-left: 3px solid transparent;
+      text-decoration: none !important;
+    }
+    .sv-fam-item:hover {
+      background: rgba(232,93,26,0.08);
+      border-left-color: rgba(232,93,26,0.4);
+    }
+    .sv-fam-item.active {
+      background: rgba(232,93,26,0.12);
+      border-left-color: #e85d1a;
+    }
+    .sv-fam-img {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #2a2a2a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sv-fam-img img { width: 100%; height: 100%; object-fit: cover; }
+    .sv-fam-name { font-size: 13px; color: #aaa; font-weight: 400; line-height: 1.3; }
+    .sv-fam-item.active .sv-fam-name { color: #fff; font-weight: 500; }
+
+    /* ── MAIN ── */
+    .sv-cat-main {
+      background: #f5f3ef;
+      padding: 28px 32px;
+    }
+    .sv-cat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .sv-cat-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sv-cat-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      color: #111;
+      line-height: 1;
+    }
+    .sv-cat-count {
+      font-size: 12px;
+      color: #888;
+      background: #e8e5e0;
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+    .sv-cat-search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid #e0ddd8;
+      border-radius: 6px;
+      padding: 8px 14px;
+      width: 260px;
+    }
+    .sv-cat-search i { color: #aaa; font-size: 16px; }
+    .sv-cat-search input {
+      border: none;
+      background: none;
+      outline: none;
+      font-size: 13px;
+      color: #111;
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .sv-cat-search input::placeholder { color: #bbb; }
+
+    /* ── TOGGLE MOBILE ── */
+    .sv-cat-toggle {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      padding: 9px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    /* ── PRODUCTOS GRID ── */
+    .sv-prod-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+    .sv-prod-card {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e8e5e0;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .sv-prod-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.09);
+    }
+    .sv-prod-card-img {
+      height: 120px;
+      background: #f0eeea;
+      overflow: hidden;
+    }
+    .sv-prod-card-img a { display: block; width: 100%; height: 100%; }
+    .sv-prod-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 8px;
+      transition: transform 0.3s;
+    }
+    .sv-prod-card:hover .sv-prod-card-img img { transform: scale(1.05); }
+    .sv-prod-card-body {
+      padding: 10px 12px;
+      border-top: 2px solid #e85d1a;
+    }
+    .sv-prod-card-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: #111;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 34px;
+    }
+    .sv-prod-card-price {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e85d1a;
+      margin-top: 6px;
+    }
+
+    /* ── EMPTY STATE ── */
+    .sv-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 60px 24px;
+      color: #aaa;
+      font-size: 14px;
+    }
+    .sv-empty i { font-size: 40px; }
+
+    /* ── PAGINACIÓN ── */
+    #contenedor-paginacion {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    #contenedor-paginacion .page-nav {
+      padding: 7px 13px;
+      border: 1px solid #e0ddd8;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #444;
+      background: #fff;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+    #contenedor-paginacion .page-nav:hover,
+    #contenedor-paginacion .page-nav.active {
+      background: #e85d1a;
+      color: #fff;
+      border-color: #e85d1a;
+    }
+
+    /* ── BOTÓN DESCARGAR ── */
+    .sv-dl-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 150;
+      background: #333;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      transition: background 0.2s;
+    }
+    .sv-dl-btn:hover { background: #e85d1a; }
+
+    /* ── MODAL ── */
+    .sv-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+    }
+    .sv-modal-overlay.open { display: flex; }
+    .sv-modal {
+      background: #fff;
+      border-radius: 8px;
+      padding: 28px;
+      width: 360px;
+      max-width: 90vw;
+    }
+    .sv-modal h5 { font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #111; }
+    .sv-modal select {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #111;
+      outline: none;
+      margin-bottom: 20px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .sv-modal-footer { display: flex; justify-content: flex-end; gap: 10px; }
+    .sv-modal-cancel {
+      padding: 8px 18px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 13px;
+      cursor: pointer;
+      color: #555;
+    }
+    .sv-modal-confirm {
+      padding: 8px 18px;
+      border: none;
+      border-radius: 6px;
+      background: #e85d1a;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .sv-modal-confirm:hover { background: #c44d14; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .sv-cat-wrap { grid-template-columns: 1fr; }
+      .sv-cat-sidebar { position: static; height: auto; display: none; }
+      .sv-cat-sidebar.open { display: block; }
+      .sv-cat-toggle { display: flex; }
+      .sv-cat-main { padding: 20px 16px; }
+      .sv-cat-search { width: 100%; }
+      .sv-prod-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    }
+  </style>
 {% endblock %}
+
 {% block content %}
-<style>
-  #lista-familias {
-    list-style: none; /* Quita viñetas */
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa; /* Igual que el canvas */
-  }
 
-  #lista-familias li {
-    border: none;
-    background-color: #f8f9fa; /* Fondo igual al canvas */
-    padding: 0.5rem 1rem;
-    font-family: 'Segoe UI', sans-serif;
-    color: #212529;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
+<!-- TOGGLE MOBILE -->
+<button class="sv-cat-toggle" id="sv-cat-toggle">
+  <i class="bi bi-list"></i> Ver categorías
+</button>
 
-  #lista-familias li:hover {
-    background-color: #e2e6ea; /* Color sutil al pasar el mouse */
-  }
-.familia-carousel {
-  scroll-behavior: smooth;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* IE 10+ */
-}
-.familia-carousel::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
-}
-.familia-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  transition: 0.2s;
-}
-</style>
-<body>
-<div class="container-fluid" style="background-color: #f6f5f5;">
-  <button class="btn btn-secondary position-fixed" style="bottom: 20px; right: 20px; z-index: 1000;" data-bs-toggle="modal" data-bs-target="#pdfModal">
-    <i class="bi bi-download"></i> Descargar Catálogo
-  </button>
-  <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Descargar catálogo</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<div class="sv-cat-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sv-cat-sidebar" id="sv-cat-sidebar">
+    <div class="sv-cat-sidebar-title">Categorías</div>
+    {% for fam in familias %}
+      <div class="sv-fam-item {% if fam.id == familia_actual.id %}active{% endif %} familia-item" data-id="{{ fam.id }}">
+        <div class="sv-fam-img">
+          <img src="{{ fam.imagen }}" alt="{{ fam.nombre }}" loading="lazy" onerror="this.style.display='none'">
         </div>
-        <div class="modal-body">
-          <form id="pdfForm">
-            <label for="familiaSelect">Seleccione la familia:</label>
-            <select class="form-select" id="familiaSelect" name="familia_id">
-              <option value="0">Todas las familias</option>
-              {% for fam in familias %}
-                <option value="{{ fam.id }}" {% if fam.id == familia_actual.id %}selected{% endif %}>{{ fam.nombre }}</option>
-              {% endfor %}
-            </select>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" form="pdfForm" class="btn btn-primary">Descargar PDF</button>
-        </div>
+        <span class="sv-fam-name">{{ fam.nombre }}</span>
+      </div>
+    {% endfor %}
+  </aside>
+
+  <!-- MAIN -->
+  <main class="sv-cat-main">
+    <div class="sv-cat-header">
+      <div class="sv-cat-header-left">
+        <h3 class="sv-cat-title" id="titulo-familia">{{ familia_actual.nombre }}</h3>
+      </div>
+      <div class="sv-cat-search">
+        <i class="bi bi-search"></i>
+        <input type="text" id="buscador" placeholder="Buscar artículos...">
       </div>
     </div>
-  </div>
 
-  <div class="row">
-    <button class="btn btn-outline-secondary d-md-none my-2" type="button" id="toggleCategoriasBtn">
-      <i class="bi bi-list"></i> Ver categorías
-    </button>
-    <div class="col-12 col-lg-2 p-3">
-      <div id="barraCategorias" class="d-md-block d-none">
-        <h5 class="mb-3">Categorías</h5>
-        <ul class="list-group list-familias shadow" id="lista-familias" style="background-color: #fefcfc;">
-          {% for fam in familias %}
-            <li class="list-group-item familia-item border-0 bg-transparent text-center" data-id="{{ fam.id }}">
-              <a href="#" class="text-decoration-none text-dark d-block fw-bold">
-                <img src="{{ fam.imagen|default:DEFAULT_IMAGE }}" alt="{{ fam.nombre }}" class="rounded-circle mt-2 mb-1 mx-auto d-md-block d-none" style="width: 40px; height: 40px; object-fit: cover;">
-                {{ fam.nombre }}
-              </a>
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
+    <div id="contenedor-articulos">
+      {% include "catalogo/cards_articulos_new.html" with articulos=familia_actual.articulos_set.all %}
     </div>
-    <!-- Contenido principal -->
-    <div class="col-md-10 p-4">
-      <!-- Acá ponés el buscador, título de familia, y los artículos -->
-      <h3 id="titulo-familia">{{ familia_actual.nombre }}</h3>
-      <input type="text" class="form-control my-3" id="buscador" placeholder="Buscar artículos...">
-      <div id="contenedor-articulos">
-        {% include "catalogo/cards_articulos.html" with articulos=familia_actual.articulos_set.all %}
-      </div>
-      <div id="contenedor-paginacion">
-        <!-- Se llenará con la respuesta Ajax -->
-      </div>
+    <div id="contenedor-paginacion"></div>
+  </main>
+
+</div>
+
+<!-- BOTÓN DESCARGAR -->
+<button class="sv-dl-btn" id="sv-dl-btn">
+  <i class="bi bi-download"></i> Descargar catálogo
+</button>
+
+<!-- MODAL DESCARGA -->
+<div class="sv-modal-overlay" id="sv-modal">
+  <div class="sv-modal">
+    <h5>Descargar catálogo</h5>
+    <select id="familiaSelect">
+      <option value="0">Todas las familias</option>
+      {% for fam in familias %}
+        <option value="{{ fam.id }}" {% if fam.id == familia_actual.id %}selected{% endif %}>{{ fam.nombre }}</option>
+      {% endfor %}
+    </select>
+    <div class="sv-modal-footer">
+      <button class="sv-modal-cancel" id="sv-modal-cancel">Cancelar</button>
+      <button class="sv-modal-confirm" id="sv-modal-confirm">Descargar PDF</button>
     </div>
   </div>
 </div>
 
-</body>
-<!-- Script JS -->
 <script>
   let familiaActual = "{{ familia_actual.id }}";
   let timeout = null;
@@ -116,80 +389,65 @@
       .then(data => {
         document.getElementById('contenedor-articulos').innerHTML = data.html;
         document.getElementById('contenedor-paginacion').innerHTML = data.pagination;
-        prepararLinksPaginacion(); // ← importante para paginación
+        prepararLinksPaginacion();
       });
-    }
+  }
 
   function prepararLinksPaginacion() {
     document.querySelectorAll('.page-nav').forEach(link => {
       link.addEventListener('click', e => {
         e.preventDefault();
-        const page = link.dataset.page;
-        cargarArticulos(familiaActual, document.getElementById('buscador').value, page);
+        cargarArticulos(familiaActual, document.getElementById('buscador').value, link.dataset.page);
       });
     });
   }
-  // Eventos para clic en familia-item (del menú u offcanvas)
+
   document.querySelectorAll('.familia-item').forEach(el => {
     el.addEventListener('click', e => {
       e.preventDefault();
+      document.querySelectorAll('.familia-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
       familiaActual = el.dataset.id;
-      const nombre = el.querySelector('a').textContent.trim();
-      document.getElementById('titulo-familia').textContent = nombre;
+      document.getElementById('titulo-familia').textContent = el.querySelector('.sv-fam-name').textContent.trim();
       document.getElementById('buscador').value = '';
       cargarArticulos(familiaActual);
+      if (window.innerWidth < 768) {
+        document.getElementById('sv-cat-sidebar').classList.remove('open');
+      }
     });
   });
 
-  // Evento para el buscador
   document.getElementById('buscador').addEventListener('input', () => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-      const q = document.getElementById('buscador').value;
-      cargarArticulos(familiaActual, q);
-    }, 500);
+      cargarArticulos(familiaActual, document.getElementById('buscador').value);
+    }, 400);
   });
 
-  // Evento para clic en card de familia
-  document.querySelectorAll('.familia-card').forEach(card => {
-    card.addEventListener('click', () => {
-      familiaActual = card.dataset.id;
-      const nombre = card.querySelector('.card-title').textContent.trim();
-      document.getElementById('titulo-familia').textContent = nombre;
-      document.getElementById('buscador').value = '';
-      cargarArticulos(familiaActual);
-    });
+  document.getElementById('sv-cat-toggle').addEventListener('click', () => {
+    document.getElementById('sv-cat-sidebar').classList.toggle('open');
   });
 
-  // Iniciar los eventos de paginación una vez
+  document.getElementById('sv-dl-btn').addEventListener('click', () => {
+    document.getElementById('sv-modal').classList.add('open');
+  });
+  document.getElementById('sv-modal-cancel').addEventListener('click', () => {
+    document.getElementById('sv-modal').classList.remove('open');
+  });
+  document.getElementById('sv-modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('sv-modal')) {
+      document.getElementById('sv-modal').classList.remove('open');
+    }
+  });
+  document.getElementById('sv-modal-confirm').addEventListener('click', () => {
+    const familiaId = document.getElementById('familiaSelect').value;
+    window.open(`/catalogo/pdf/?familia_id=${familiaId}`, '_blank');
+    document.getElementById('sv-modal').classList.remove('open');
+  });
+
   document.addEventListener('DOMContentLoaded', () => {
     cargarArticulos(familiaActual);
-  });
-
-  
-  document.getElementById('pdfForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const familiaId = document.getElementById('familiaSelect').value;
-    const url = `/catalogo/pdf/?familia_id=${familiaId}`;
-    window.open(url, '_blank');
-});
-  document.addEventListener('DOMContentLoaded', function () {
-    const toggleBtn = document.getElementById('toggleCategoriasBtn');
-    const barraCategorias = document.getElementById('barraCategorias');
-    const familiaItems = document.querySelectorAll('.familia-item');
-    
-    toggleBtn.addEventListener('click', function () {
-      barraCategorias.classList.toggle('d-none');
-    });
-    
-    // Oculta las categorías en móvil al hacer clic en una
-    familiaItems.forEach(item => {
-      item.addEventListener('click', function () {
-        if (window.innerWidth < 768) {  // Solo en móviles
-          barraCategorias.classList.add('d-none');
-        }
-      });
-    }); 
+    prepararLinksPaginacion();
   });
 </script>
 

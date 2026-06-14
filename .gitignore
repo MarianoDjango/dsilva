@@ -172,3 +172,4 @@ myapp/migrations/0018_alter_articulos_options.py
 myapp/migrations/0021_merge_20241017_2252.py
 static/
 tash
+offline.md

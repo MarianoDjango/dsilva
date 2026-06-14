@@ -1,0 +1,27 @@
+{% load static %}
+{% if articulos %}
+<div class="sv-prod-grid">
+  {% for art in articulos %}
+  <div class="sv-prod-card">
+    <div class="sv-prod-card-img">
+      <a href="{% url 'articulo_detalle' art.id %}">
+        {% if art.imagen_cloud %}
+          <img src="{{ art.imagen_cloud.url }}" alt="{{ art.descripcion }}" loading="lazy">
+        {% else %}
+          <img src="{{ DEFAULT_IMAGE }}" alt="Sin imagen" loading="lazy">
+        {% endif %}
+      </a>
+    </div>
+    <div class="sv-prod-card-body">
+      <div class="sv-prod-card-name" title="{{ art.descripcion }}">{{ art.descripcion }}</div>
+      <div class="sv-prod-card-price">{{ art.precio_venta_formateado }}</div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="sv-empty">
+  <i class="ti ti-mood-empty" aria-hidden="true"></i>
+  <p>No hay artículos en esta categoría.</p>
+</div>
+{% endif %}

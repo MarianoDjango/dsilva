@@ -21,7 +21,7 @@
     "@context": "https://schema.org/",
     "@type": "Product",
     "name": "{{ articulo.descripcion }}",
-    "description": "{{ articulo.descripcion }} disponible en Gomería y Distribuidora Silva, Paso del Rey, Buenos Aires.",
+    "description": "{% if articulo.descripcion_seo %}{{ articulo.descripcion_seo }}{% else %}{{ articulo.descripcion }} disponible en Gomería y Distribuidora Silva, Paso del Rey, Buenos Aires.{% endif %}",
     "url": "{{ request.build_absolute_uri }}",
     "image":  "{% if articulo.imagen_cloud %}{{ articulo.imagen_cloud.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static DEFAULT_IMAGE %}{% endif %}",
     "offers": {
@@ -34,7 +34,7 @@
         "name": "Gomería y Distribuidora Silva",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "Graham Bell 2948",
+          "streetAddress": "Graham Bell 2048",
           "addressLocality": "Paso del Rey",
           "addressRegion": "Buenos Aires",
           "addressCountry": "AR"
@@ -53,7 +53,8 @@
       <img src="{% static DEFAULT_IMAGE %}" alt="Sin imagen" class="card-img-top" style="object-fit: cover; max-height: 400px;">
     {% endif %}
     <div class="card-body">
-      <h3 class="card-title">{{ articulo.descripcion }}</h3>
+      <h1 class="card-title fs-4">{{ articulo.descripcion }}</h1>
+      <p class="card-text text-muted small">{{ articulo.descripcion_seo }}</p>
       <p class="card-text text-muted">{{ art_stock }}</p>
       <p class="card-text fw-bold fs-5">$ {{ articulo.precio_venta|precio_ars }}</p>
     </div>

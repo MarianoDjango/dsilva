@@ -40,8 +40,11 @@ from io import BytesIO
 def index(request):
     return render(request, 'index.html')
 
-def nosotros(request):
-    return render(request, 'nosotros.html')
+def landing_preview(request):
+    return render(request, 'index_new.html')
+
+'''def nosotros(request):
+    return render(request, 'nosotros.html')'''
 
 def afterlogin( request, *args, **kwargs):
     idempresa = request.user.perfil.idempresa
@@ -55,9 +58,12 @@ def famlias_empresa(request, **kwargs):
     id_familia = request.GET['pfamilia']
     recs = []
     for fam in familias_var:
-        fila = f'<a id="fam{fam.id}" href="javascript:void(0);" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar" onclick="ponerfamilia({fam.id}, \'{fam.nombre}\')"><span>{fam.nombre}</span></a>'
+        carpeta = fam.nombre
+        cloud_name = settings.CLOUDINARY_STORAGE.get('CLOUD_NAME')
+        imagen_url = f"https://res.cloudinary.com/{cloud_name}/image/upload/dsilva/{fam.nombre}/generic.jpg"
+        fila = f'<a id="fam{fam.id}" href="javascript:void(0);" class="sv-fam-item" onclick="ponerfamilia({fam.id}, \'{fam.nombre}\')"><div class="sv-fam-img"><img src="{imagen_url}" onerror="this.style.display=\'none\'"></div><span class="sv-fam-name">{fam.nombre}</span></a>'
         recs.append({'fila': fila})
-    fila = f'<a id="fam{0}" href="javascript:void(0);" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar" onclick="ponerfamilia({0}, \'{"Todos"}\')"><span>{"Todos"}</span></a>'
+    fila = f'<a id="fam{0}" href="javascript:void(0);" class="sv-fam-item" onclick="ponerfamilia({0}, \'Todos\')"><div class="sv-fam-img"></div><span class="sv-fam-name">Todos</span></a>'    
     recs.append({'fila': fila})
     data = {'filas' : recs,
             'id_familia' : id_familia}
@@ -1693,7 +1699,23 @@ def backup_database(request):
         return JsonResponse({'status': f'❌ Error en el dump: {str(e)}'})
     except Exception as e:
         return JsonResponse({'status': f'❌ Error general: {str(e)}'})
-    
+
+def catalogo_preview(request):
+    # misma lógica que articulos_catalogo pero con template nuevo
+    empresas_usuario = 2
+    lista_familias = familias.objects.filter(idempresa=empresas_usuario)
+    familias_con_imagen = []
+    for familia in lista_familias:
+        carpeta = familia.nombre
+        cloud_name = settings.CLOUDINARY_STORAGE.get('CLOUD_NAME')
+        imagen_url = f"https://res.cloudinary.com/{cloud_name}/image/upload/dsilva/{carpeta}/generic.jpg"
+        familias_con_imagen.append({'id': familia.id, 'nombre': familia.nombre, 'imagen': imagen_url})
+    primera_familia = lista_familias.first()
+    return render(request, 'catalogo/catalogo_new.html', {
+        'familias': familias_con_imagen,
+        'familia_actual': primera_familia,
+    })
+
 def articulos_catalogo(request):
     empresas_usuario = 2
     lista_familias = familias.objects.filter(idempresa=empresas_usuario)
@@ -1728,7 +1750,7 @@ def filtrar_articulos(request):
     paginator = Paginator(articulos_filtrados, 24)  # 12 artículos por página
     page_obj = paginator.get_page(page)
 
-    html = render_to_string('catalogo/cards_articulos.html', {
+    html = render_to_string('catalogo/cards_articulos_new.html', {
         'articulos': page_obj, 'DEFAULT_IMAGE': static(settings.DEFAULT_IMAGE)
     })
     pagination_html = render_to_string("catalogo/pagination.html", {
