@@ -2,7 +2,7 @@ import time
 import anthropic
 from django.core.management.base import BaseCommand
 from myapp.models import articulos
-
+from django.conf import settings
 
 EMPRESA_MAESTRA = 2
 
@@ -47,7 +47,7 @@ class Command(BaseCommand):
         solo_empresa_2 = kwargs['solo_empresa_2']
         solo_replicar = kwargs['solo_replicar']
 
-        client = anthropic.Anthropic()  # toma ANTHROPIC_API_KEY del entorno
+        client = anthropic.Anthropic(api_key=settings.ANTHROPIC_API_KEY)  # toma ANTHROPIC_API_KEY del entorno
 
         if not solo_replicar:
             self.generar_para_empresa_maestra(client)
