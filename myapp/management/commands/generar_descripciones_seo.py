@@ -7,7 +7,7 @@ from myapp.models import articulos
 EMPRESA_MAESTRA = 2
 
 
-def generar_descripcion(client, nombre_producto):
+def generar_descripcion(client, nombre_producto, familia):
     message = client.messages.create(
         model="claude-haiku-4-5-20251001",
         max_tokens=200,
@@ -16,11 +16,12 @@ def generar_descripcion(client, nombre_producto):
                 "role": "user",
                 "content": (
                     f"Generá una descripción SEO corta (2 oraciones, máximo 150 palabras) "
-                    f"para el siguiente producto de una gomería y distribuidora de neumáticos argentina: '{nombre_producto}'. "
-                    f"La descripción debe mencionar el producto, sus características técnicas inferidas del nombre, "
+                    f"para el siguiente producto de una distribuidora de insyumos para gomería de argentina. "
+                    f"El producto es: '{nombre_producto}', y pertenece a la familia/categoría: '{familia}'. "
+                    f"La descripción debe mencionar el producto, sus características técnicas inferidas del nombre y de su familia "
+                    f"(por ejemplo, si es un neumático hablá de medidas/rodado; si es una cámara, llanta, batería, etc., usá terminología propia de ese rubro), "
                     f"y que está disponible en Gomería y Distribuidora Silva, Paso del Rey, Buenos Aires. "
-                    f"Respondé solo con la descripción, sin comillas ni explicaciones."
-                )
+                    f"Respondé solo con la descripción, sin comillas ni explicaciones."                )
             }
         ]
     )
@@ -65,7 +66,8 @@ class Command(BaseCommand):
 
         for i, articulo in enumerate(pendientes, 1):
             try:
-                descripcion = generar_descripcion(client, articulo.descripcion)
+                familia_nombre = articulo.familia.nombre if articulo.familia else "repuestos y accesorios para vehículos"
+                descripcion = generar_descripcion(client, articulo.descripcion, familia_nombre)
                 articulo.descripcion_seo = descripcion
                 articulo.save(update_fields=['descripcion_seo'])
                 self.stdout.write(f"[{i}/{total}] ✓ {articulo.descripcion[:60]}")
