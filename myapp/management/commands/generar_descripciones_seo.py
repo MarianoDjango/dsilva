@@ -57,8 +57,7 @@ class Command(BaseCommand):
 
     def generar_para_empresa_maestra(self, client):
         pendientes = articulos.objects.filter(
-            idempresa=EMPRESA_MAESTRA,
-            descripcion_seo__isnull=True
+            idempresa=EMPRESA_MAESTRA
         ).order_by('id')
 
         total = pendientes.count()
@@ -86,8 +85,7 @@ class Command(BaseCommand):
 
         # Mapa nombre -> descripcion_seo de empresa maestra
         maestra = articulos.objects.filter(
-            idempresa=EMPRESA_MAESTRA,
-            descripcion_seo__isnull=False
+            idempresa=EMPRESA_MAESTRA
         ).values('descripcion', 'descripcion_seo')
 
         mapa = {item['descripcion']: item['descripcion_seo'] for item in maestra}
